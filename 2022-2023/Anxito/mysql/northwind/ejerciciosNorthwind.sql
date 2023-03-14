@@ -39,12 +39,22 @@ FROM employees;
 #a. La primera letra del nombre, seguida del apellido
 #b. El correo deberá presentarse en minúscula
 
-SELECT   firstname, lastName
-FROM employees; 
+SELECT   firstname, lastName,LOWER(CONCAT(SUBSTRING(firstname,1,1), lastName,"@northwind.com")) AS Email
+FROM employees ; 
 
 #9- Realiza una consulta que permita presentar el nombre y apellidos de los 
 #empleados que tengan más de 40 años
+SELECT CONCAT(firstName, ' ', lastName) AS 'nombre' ,YEAR(curdate()) - year(BirthDate)>=40
+FROM Employees;
 
+SELECT YEAR(orderDate),MONTH(orderDate) AS Mes,COUNT(*)
+FROM orders
+GROUP BY YEAR(orderDate),MONTH(orderDate) HAVING MES=3;
+
+SELECT YEAR(orderDate),COUNT(*)
+FROM orders
+WHERE MONTH (orderDate)=3
+GROUP BY YEAR(orderDate);
 
 #10- Realiza una consulta que permita presentar el número de fax que tiene cada país
 
