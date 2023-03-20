@@ -75,63 +75,64 @@ SELECT country,group_concat(DISTINCT fax) AS faxes
 FROM customers
 GROUP BY country
 HAVING faxes="";
+ 
+ #13
+ 
+ SELECT contactName,fax,country FROM customers;
+ 
+ #14
+ 
+ SELECT MAX(TIMESTAMPDIFF(YEAR,birthdate,curdate())) AS OLDEST,MIN(TIMESTAMPDIFF(YEAR,birthdate,curdate()))AS YOUNGEST,ROUND(AVG(TIMESTAMPDIFF(YEAR,birthdate,curdate())),2) AS "AVERAGE AGE" FROM employees;
+ 
+ #15
+ 
+ SELECT YEAR(orderdate),COUNT(*) AS "PEDIDOS" FROM orders GROUP BY YEAR(orderdate);
+ 
+ #16
+ 
+ SELECT orderID,freight FROM orders;
+ 
+ #17
+ 
+  SELECT orderID,freight FROM orders WHERE freight>10;
+  
+  #18
+  
+  SELECT categoryName,COUNT(*) AS "Número de productos"
+  FROM products JOIN categories USING(categoryID)
+  GROUP BY categoryID
+  HAVING COUNT(*)>10;
 
+#19
 
-#13- Realiza una consulta que permita presentar el nombre del cliente, el fax y el país 
-#al que pertenece
+SELECT productName,categoryName
+FROM products JOIN categories USING(categoryID);
 
+#20
 
-#14- Realiza una consulta que muestre la mayor edad, la menor edad y la edad 
-#promedio de los empleados. Recuerde que para eso tiene que buscar la diferencia 
-#entre la fecha actual y la fecha de nacimiento.
-#a. Para obtener la fecha actual utilice la función curdate().
-#b. Para obtener la diferencia en años utilice la función datediff.
+SELECT c.companyName, CONCAT(e.firstName," ",e.lastName) AS Vendedor
+FROM orders o JOIN employees e USING(employeeID) JOIN customers c ON o.customerID=c.customerID
+ORDER BY e.employeeId;
 
+#21
 
-#15- Realiza una consulta que muestre la cantidad de facturas que se han registrado 
-#por cada año (order day)
+SELECT CompanyName,contactName, country,orderId,orderDate
+FROM customers JOIN orders USING(customerId)
+ORDER BY 1,5 DESC;
 
+#22
 
-#16- Realiza una consulta que me permita mostrar el número de la factura y el valor 
-#por concepto de envío
+SELECT c.customerId,c.companyName,SUM(od.quantity*od.unitPrice)
+FROM orders o JOIN orderDetails OD USING(orderID) JOIN customers c USING(customerId)
+GROUP BY c.customerID
+ORDER BY 3 DESC
+LIMIT 5;
 
+#23
 
-#17- Realiza una consulta que me permita mostrar el número de la factura y el valor 
-#por concepto de envío pero de aquellos que superen a los 10.
-
-
-#18- Realiza una consulta que muestre el código de la categoría, el total de productos 
-#que tiene la categoría únicamente para las categorías que tengan más de 10 
-#productos. Para esto utilice la cláusula having
-
-
-#19- Realizar una consulta que permita presentar el nombre del producto y con su 
-#respetiva categoría
-
-
-#20- Realizar una búsqueda de los nombres de compañías con las cuales se ha tenido 
-#ventas, ordenar por el código del vendedor
-
-
-#21- Realiza una consulta que muestre el listado de las facturas de cada cliente.
-#a. El listado debe tener las siguientes columnas: nombre del cliente, país 
-#del cliente no. De factura fecha de factura ordenado por nombre del 
-#cliente en forma ascendente y luego por la fecha de la factura de forma 
-#descendente una búsqueda de los nombres de compañías con las cuales 
-#se ha tenido ventas, ordenar por el código del vendedor
-
-
-#22- Realiza una consulta que muestre un listado de los clientes y el monto total que 
-#nos han comprado de los 5 clientes que más han comprado. El listado debe tener 
-#las siguientes columnas: código del cliente, nombre del contacto, monto total. 
-#Ordenado por el monto total de forma descendente
-
-
-#23- Realiza una consulta que muestre un listado de los empleados de la empresa en 
-#los diferentes territorios. El listado debe tener las siguientes columnas: nombre 
-#del empleado ,id de la región y descripción del territorio ordenado por el nombre 
-#completo del empleado de forma ascendente
-
+SELECT CONCAT(e.firstName," ",e.lastName) AS "Nombre empleado",regionId AS "Código región",territoryDescription AS "Descripción del territorio"
+FROM employees e JOIN employeeTerritories et USING(employeeID) JOIN territories t USING(territoryId)
+ORDER BY 1;
 
 
 
