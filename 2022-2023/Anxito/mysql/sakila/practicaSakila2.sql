@@ -1,4 +1,4 @@
-#1
+#1 Saca las 10 primeras películas alfabéticamente y el número de copias que se disponen de cada  una de ellas.
 SELECT fa.actor_id AS ID,CONCAT(a.first_name," ",a.last_Name) AS Nombre,COUNT(*) AS "Número de películas" FROM film_actor fa JOIN actor a USING(actor_id)
 GROUP BY fa.actor_id
 ORDER BY 3 DESC LIMIT 10;
@@ -24,7 +24,7 @@ GROUP BY f.title
 ORDER BY 2 DESC
 LIMIT 10;
 
-#5
+#5 Saca todas las películas que ha alquilado el cliente Deborah Walker. 
 
 SELECT f.film_id,f.title,COUNT(*)
 FROM customer c JOIN rental r USING(customer_id) JOIN inventory i USING(inventory_id) JOIN film f USING(film_id)
